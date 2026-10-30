@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>无翼社 | 无翼学院恋爱纪事</title>
+<meta name="description" content="无翼社倾情奉献的首部视觉小说《无翼学院恋爱纪事》。一场属于他的酸甜恋爱喜剧正式开演了。">
+<style>
+:root{
+  --bg:#0c0c15;
+  --text:#f0eff8;
+  --muted:#9d9ab3;
+  --accent:#ff8fca; /* 恋爱粉 */
+  --accent2:#8f9dff; /* 星空蓝 */
+  --line:rgba(255,255,255,.08);
+  --card-bg:rgba(255,255,255,.03);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(143,157,255,.15), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(255,143,202,.1), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+main,footer{position:relative;z-index:1;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+
+.serif{font-family:"Songti SC","STSong",serif;}
+
+/* ================= 导航 ================= */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px;transition:.4s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(12,12,21,.85);
+  backdrop-filter:blur(12px);
+  padding:14px 40px;border-bottom-color:var(--line);
+}
+.logo{font-family:"Songti SC",serif;font-size:1.2rem;letter-spacing:.2em;color:var(--text);display:flex;align-items:center;gap:10px;}
+.logo span{color:var(--accent);}
+.nav-links{display:flex;gap:30px;font-size:.9rem;letter-spacing:.1em;}
+.nav-links a{color:var(--muted);transition:.3s;position:relative;}
+.nav-links a:hover{color:var(--accent);}
+
+/* ================= Hero 主视觉 ================= */
+.hero{
+  min-height:90vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:120px 20px 60px;
+}
+.hero-subtitle{font-size:1rem;letter-spacing:.4em;color:var(--accent2);margin-bottom:20px;}
+.hero-title{
+  font-family:"Songti SC",serif;font-size:clamp(2.5rem,6vw,5rem);
+  font-weight:400;letter-spacing:.1em;line-height:1.2;margin-bottom:24px;
+  background:linear-gradient(180deg,#fff 0%,#ffd6ee 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 30px rgba(255,143,202,.2));
+}
+.hero-desc{max-width:600px;color:var(--muted);font-size:1rem;margin-bottom:40px;line-height:2;}
+.btn{
+  display:inline-block;padding:14px 40px;border-radius:30px;font-size:.95rem;
+  letter-spacing:.1em;transition:.3s;cursor:pointer;border:none;font-family:inherit;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+  box-shadow:0 10px 25px -10px var(--accent);position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  transition:.5s;
+}
+.btn-primary:hover::after{left:100%;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 35px -10px var(--accent);}
+.btn-outline{background:transparent;border:1px solid var(--muted);color:var(--muted);margin-left:15px;}
+.btn-outline:hover{border-color:var(--text);color:var(--text);}
+
+/* ================= 区块通用 ================= */
+.section{max-width:1100px;margin:0 auto;padding:100px 20px;}
+.section-head{text-align:center;margin-bottom:60px;}
+.section-num{font-size:.8rem;letter-spacing:.3em;color:var(--accent2);margin-bottom:10px;display:block;}
+.section-head h2{font-family:"Songti SC",serif;font-size:2.2rem;font-weight:400;letter-spacing:.1em;}
+.section-head p{color:var(--muted);margin-top:15px;font-size:.95rem;}
+
+/* ================= 游戏详情 ================= */
+.game-detail-box{
+  background:var(--card-bg);border:1px solid var(--line);border-radius:12px;
+  padding:40px;line-height:2;color:#b6b4cc;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+.game-detail-box strong{color:var(--accent);font-weight:normal;font-family:"Songti SC",serif;font-size:1.1rem;}
+.game-detail-box p{margin-bottom:15px;}
+
+/* ================= 角色卡片 ================= */
+.char-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+.char-card{
+  background:var(--card-bg);border:1px solid var(--line);border-radius:12px;
+  padding:30px 24px;transition:.4s;position:relative;overflow:hidden;
+}
+.char-card:hover{transform:translateY(-5px);border-color:rgba(255,143,202,.3);background:rgba(255,255,255,.05);box-shadow:0 15px 30px -15px rgba(255,143,202,.2);}
+.char-role{
+  position:absolute;top:15px;right:15px;font-size:.7rem;
+  padding:3px 10px;border-radius:20px;background:rgba(255,143,202,.15);
+  color:var(--accent);border:1px solid rgba(255,143,202,.3);
+  letter-spacing:.05em;
+}
+.char-name{font-family:"Songti SC",serif;font-size:1.4rem;color:#fff;margin-bottom:5px;}
+.char-title{font-size:.8rem;color:var(--accent2);margin-bottom:15px;letter-spacing:.1em;}
+.char-desc{font-size:.9rem;color:var(--muted);line-height:1.8;}
+
+/* ================= 成员名单 ================= */
+.member-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:15px;}
+.member-item{
+  display:flex;align-items:center;gap:15px;padding:12px 16px;
+  background:var(--card-bg);border-radius:8px;border:1px solid var(--line);
+  transition:.3s;
+}
+.member-item:hover{border-color:rgba(143,157,255,.3);background:rgba(143,157,255,.05);}
+.member-avatar{
+  width:42px;height:42px;border-radius:50%;background:linear-gradient(45deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;font-size:1.1rem;flex-shrink:0;
+  font-family:"Songti SC",serif;
+}
+.member-info{display:flex;flex-direction:column;overflow:hidden;}
+.member-name{font-size:.95rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.member-role{font-size:.75rem;color:var(--accent);white-space:nowrap;}
+
+/* ================= 页脚 ================= */
+footer{border-top:1px solid var(--line);padding:60px 20px 40px;text-align:center;background:rgba(0,0,0,.2);}
+.footer-logo{font-family:"Songti SC",serif;font-size:1.8rem;letter-spacing:.2em;color:var(--accent);margin-bottom:15px;}
+.footer-links{display:flex;justify-content:center;gap:30px;margin-bottom:20px;font-size:.9rem;}
+.footer-links a{color:var(--muted);transition:.3s;}
+.footer-links a:hover{color:var(--accent);}
+footer p{font-size:.8rem;color:var(--muted);opacity:.6;}
+
+/* ================= 手机端适配 ================= */
+@media (max-width: 768px){
+  header{padding:15px 20px;}
+  header.scrolled{padding:15px 20px;}
+  .nav-links{
+    position:fixed;top:0;right:-100%;width:70%;height:100vh;
+    background:rgba(12,12,21,.98);backdrop-filter:blur(10px);
+    flex-direction:column;justify-content:center;align-items:center;
+    transition:.4s cubic-bezier(0.2, 0.8, 0.2, 1);z-index:90;
+    font-size:1.1rem;
+  }
+  .nav-links.open{right:0;}
+  .menu-toggle{display:block;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:100;}
+  .hero-title{font-size:2.2rem;}
+  .btn-outline{margin:15px 0 0 0;display:block;width:100%;}
+  .btn-primary{width:100%;}
+  .game-detail-box{padding:25px 20px;}
+  .section{padding:70px 20px;}
+}
+
+/* PC端隐藏菜单按钮 */
+.menu-toggle{display:none;}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- ================= 导航栏 ================= -->
+<header id="header">
+  <div class="logo">无翼<span>社</span></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="#home">首页</a>
+    <a href="#game">作品</a>
+    <a href="#chars">角色</a>
+    <a href="#members">成员</a>
+  </nav>
+  <button class="menu-toggle" id="menuToggle">☰</button>
+</header>
+
+<main>
+  <!-- ================= 主视觉 Hero ================= -->
+  <section class="hero" id="home">
+    <p class="hero-subtitle">WUYI STUDIO PRESENTS</p>
+    <h1 class="hero-title">无翼学院恋爱纪事</h1>
+    <p class="hero-desc">
+      因为车祸导致愧疚而接近她的美少女？<br>
+      天然呆而不自知的青梅竹马？<br>
+      温柔知性却有点冒失的学姐？小恶魔一般的学妹？<br>
+      一场属于他的酸甜恋爱喜剧正式开演了。
+    </p>
+    <div>
+      <!-- 注意：发布前请将 href="#" 换成真实的游戏下载链接（如网盘或Steam） -->
+      <a href="#" id="downloadBtn" class="btn btn-primary" onclick="alert('游戏正在紧张制作中，敬请期待！')">获取游戏</a>
+      <a href="#game" class="btn btn-outline">查看详情</a>
+    </div>
+  </section>
+
+  <!-- ================= 游戏介绍 ================= -->
+  <section class="section" id="game">
+    <div class="section-head">
+      <span class="section-num">01 — GAME</span>
+      <h2>关于作品</h2>
+      <p>无翼社倾情奉献的视觉小说</p>
+    </div>
+    <div class="game-detail-box">
+      <p><strong>故事梗概</strong></p>
+      <p>男主本是无翼学院一名普通的高中生，爱好看轻小说，每天都幻想着自己能遇到轻小说中恋爱喜剧。一天下午，因为新书发售前往书店，在买完书回来的途中发生了车祸……</p>
+      <p style="margin-top:30px;"><strong>内容大纲</strong></p>
+      <p>从一场奇妙的梦境开始，梦醒后被妹妹与青梅竹马听到说梦话的尴尬；重返学校时与新转学生星见澪的初次相遇；被学姐拉入文学社，并邀请伙伴加入；直至运动会、校园祭与合宿的青春物语，最后开始各自的个人线……</p>
+      <div style="margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);font-size:.85rem;">
+        <p>游戏类型：恋爱喜剧 AVG</p>
+        <p>制作组：无翼社 WUYI STUDIO</p>
+        <p>当前状态：制作中</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 角色介绍 ================= -->
+  <section class="section" id="chars">
+    <div class="section-head">
+      <span class="section-num">02 — CHARACTERS</span>
+      <h2>登场人物</h2>
+      <p>交织的青春与恋爱喜剧</p>
+    </div>
+    <div class="char-grid">
+      <!-- 镰仓契 -->
+      <div class="char-card">
+        <span class="char-role">主角</span>
+        <div class="char-name">镰仓 契</div>
+        <div class="char-title">普通的高中生</div>
+        <div class="char-desc">带有一点宅属性的普通学生，爱好看轻小说。老好人级别，热心肠，经常把别人的事看得比自己的事重要。</div>
+      </div>
+      <!-- 镰仓樱 -->
+      <div class="char-card">
+        <span class="char-role">妹妹</span>
+        <div class="char-name">镰仓 樱</div>
+        <div class="char-title">家里的Vtuber</div>
+        <div class="char-desc">已经不上学了，在家里从事vtuber工作。嘴上说一点也不关心主角，实际上把哥哥看得比什么都重要，自己心疼哥哥但不知道怎么表达。</div>
+      </div>
+      <!-- 星见澪 -->
+      <div class="char-card">
+        <span class="char-role">天降</span>
+        <div class="char-name">星见 澪</div>
+        <div class="char-title">无翼财阀千金</div>
+        <div class="char-desc">无翼财阀老总的千金。因为车祸愧疚主动转学到跟主角一个学校，为人善良，行为优雅，三无属性。</div>
+      </div>
+      <!-- 羽野知花 -->
+      <div class="char-card">
+        <span class="char-role">青梅竹马</span>
+        <div class="char-name">羽野 知花</div>
+        <div class="char-title">天然呆前桌</div>
+        <div class="char-desc">从小和主角一起长大。天然呆性格，常常把控不好距离，让主角感到很头疼。</div>
+      </div>
+      <!-- 我妻纱月 -->
+      <div class="char-card">
+        <span class="char-role">学姐</span>
+        <div class="char-name">我妻 纱月</div>
+        <div class="char-title">文学社社长</div>
+        <div class="char-desc">温柔知性，却在有些地方显得非常冒失。因人手不足，机缘巧合下邀请主角加入文学社。</div>
+      </div>
+      <!-- 伊吕波千琉 -->
+      <div class="char-card">
+        <span class="char-role">学妹</span>
+        <div class="char-name">伊吕波 千琉</div>
+        <div class="char-title">小恶魔学妹</div>
+        <div class="char-desc">文学社的一员。平时喜欢捉弄主角，妥妥的小恶魔人设，自我攻略，高攻低防。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 成员名单 ================= -->
+  <section class="section" id="members">
+    <div class="section-head">
+      <span class="section-num">03 — MEMBERS</span>
+      <h2>制作团队</h2>
+      <p>无翼社的14位核心成员</p>
+    </div>
+    <div class="member-list">
+      <div class="member-item"><div class="member-avatar">H</div><div class="member-info"><span class="member-name">hikiilii</span><span class="member-role">社长</span></div></div>
+      <div class="member-item"><div class="member-avatar">本</div><div class="member-info"><span class="member-name">本尼</span><span class="member-role">文本（一审）</span></div></div>
+      <div class="member-item"><div class="member-avatar">尘</div><div class="member-info"><span class="member-name">尘芥</span><span class="member-role">文本（一审）</span></div></div>
+      <div class="member-item"><div class="member-avatar">K</div><div class="member-info"><span class="member-name">kevin</span><span class="member-role">UI设计</span></div></div>
+      <div class="member-item"><div class="member-avatar">玲</div><div class="member-info"><span class="member-name">玲lychee</span><span class="member-role">美术（3）</span></div></div>
+      <div class="member-item"><div class="member-avatar">梁</div><div class="member-info"><span class="member-name">梁渊</span><span class="member-role">CV大大</span></div></div>
+      <div class="member-item"><div class="member-avatar">M</div><div class="member-info"><span class="member-name">Moments</span><span class="member-role">二审</span></div></div>
+      <div class="member-item"><div class="member-avatar">祁</div><div class="member-info"><span class="member-name">祁风</span><span class="member-role">美术（AI）</span></div></div>
+      <div class="member-item"><div class="member-avatar">R</div><div class="member-info"><span class="member-name">Rickenbacker 4001 Azureglo</span><span class="member-role">美术（1）</span></div></div>
+      <div class="member-item"><div class="member-avatar">W</div><div class="member-info"><span class="member-name">WH-255</span><span class="member-role">音乐设计</span></div></div>
+      <div class="member-item"><div class="member-avatar">暗</div><div class="member-info"><span class="member-name">小暗</span><span class="member-role">剪辑</span></div></div>
+      <div class="member-item"><div class="member-avatar">夕</div><div class="member-info"><span class="member-name">夕右兽</span><span class="member-role">程序设计</span></div></div>
+      <div class="member-item"><div class="member-avatar">.</div><div class="member-info"><span class="member-name">.</span><span class="member-role">策划</span></div></div>
+      <div class="member-item"><div class="member-avatar">*</div><div class="member-info"><span class="member-name">(*^^;</span><span class="member-role">美术（2）</span></div></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="footer-logo">无翼社</div>
+  <div class="footer-links">
+    <!-- 发布前请将下面的 # 替换为你真实的B站、微博主页链接 -->
+    <a href="#" target="_blank" rel="noopener">Bilibili</a>
+    <a href="#" target="_blank" rel="noopener">微博</a>
+    <!-- 发布前请将下面的邮箱替换为真实邮箱 -->
+    <a href="mailto:contact@wuyi-studio.com">联系邮箱</a>
+  </div>
+  <p>© 2025 无翼社 WUYI STUDIO. All rights reserved.</p>
+</footer>
+
+<script>
+// ================= 星空背景动画 =================
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let W, H;
+let particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  particles = [];
+  // 根据屏幕大小计算星星数量
+  const count = Math.floor(W * H / 12000);
+  for(let i=0; i<count; i++) {
+    particles.push({
+      x: Math.random() * W, 
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
+      vy: Math.random() * 0.15 + 0.05,
+      alpha: Math.random() * 0.6 + 0.1
+    });
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.y -= p.vy;
+    if(p.y < 0) p.y = H;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize', resize);
+resize();
+draw();
+
+// ================= 导航栏交互 =================
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+// 手机端菜单切换
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+// 点击链接后自动关闭手机菜单
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// ================= 按钮点击演示提示 =================
+// 如果下载按钮仍然指向 #，点击时给出一个弹窗提示
+document.getElementById('downloadBtn').addEventListener('click', function(e) {
+  if(this.getAttribute('href') === '#') {
+    e.preventDefault();
+    alert('游戏正在紧张制作中，敬请期待！\n如需获取体验版，请关注我们的B站/微博动态。');
+  }
+});
+</script>
+</body>
+</html>
